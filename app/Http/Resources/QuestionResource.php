@@ -23,7 +23,10 @@ class QuestionResource extends JsonResource
             'answers_count' => $this->answers_count,
             'views_count' => $this->views_count,
             'summary' => str($this->body)->limit(250),
-            'user' => $this->user
+            'user' => UserResource::make($this->user),
+            'created_at' => DateTimeResource::make($this->created_at),
+            'updated_at' => DateTimeResource::make($this->updated_at),
+
         ];
     }
 }

@@ -5,7 +5,7 @@ import { createInertiaApp } from "@inertiajs/vue3";
 import { ZiggyVue } from "ziggy-js";
 
 createInertiaApp({
-    title: (title) => `${title} - Freemium App`,
+    title: (title) => `${title} - Laraflow App`,
     resolve: (name) => {
         const pages = import.meta.glob("./Pages/**/*.vue", { eager: true });
         return pages[`./Pages/${name}.vue`];

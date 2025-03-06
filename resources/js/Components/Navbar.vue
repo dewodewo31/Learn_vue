@@ -1,7 +1,12 @@
+<script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
+
+</script>
+
 <template>
-  <nav class="navbar navbar-expand-lg navbar-laravelflow">
+    <nav class="navbar navbar-expand-lg navbar-laravelflow">
         <div class="container">
-            <a class="navbar-brand" href="/"><strong>Stackoverflow</strong>Clone</a>
+            <a class="navbar-brand" href="/"><strong>LaraFlow</strong></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -10,7 +15,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.html">Questions</a>
+                        <Link class="nav-link active" aria-current="page" :href="route('questions.index')">Questions
+                        </Link>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="tags.html">Tags</a>
@@ -32,10 +38,10 @@
                     </li>
                     <li class="nav-item">
                         <a href="login.html" class="btn btn-outline-secondary">Log in</a>
-                        <a href="register.html" class="btn btn-primary">Sign up</a>
+                        <Link :href="route('register')" class="btn btn-primary">Sign up</Link>
                     </li>
                 </ul>
             </div>
         </div>
-  </nav>
+    </nav>
 </template>

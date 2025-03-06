@@ -21,7 +21,7 @@
                     </div>
 
                     <ul class="nav nav-underline flex-column mt-4">
-                        <li class="nav-item">
+                        <li class   ="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Latest</a>
                         </li>
                         <li class="nav-item">

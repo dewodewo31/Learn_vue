@@ -1,6 +1,6 @@
 <template>
-  <Applayout>
-    <div class="container">
+    <Applayout>
+        <div class="container">
             <div class="row">
                 <div class="col-md-9">
                     <div class="d-flex align-items-center justify-content-between">
@@ -8,20 +8,21 @@
                     </div>
                     <div class="card mt-3">
                         <ul class="list-group list-group-flush">
-                            <QuestionSummary v-for="question in questions.data" :key="question.id" :question="question"/>
+                            <QuestionSummary v-for="question in questions.data" :key="question.id"
+                                :question="question" />
                         </ul>
                     </div>
 
-                    <Pagination :meta="questions.meta"/>
+                    <Pagination :meta="questions.meta" />
                 </div>
                 <div class="col-md-3">
                     <div class="d-grid">
-                        <button class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#new-question-modal">Ask Question</button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" @click="showModal">Ask
+                            Question</button>
                     </div>
 
                     <ul class="nav nav-underline flex-column mt-4">
-                        <li class   ="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Latest</a>
                         </li>
                         <li class="nav-item">
@@ -49,91 +50,54 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="new-question-modal" data-bs-backdrop="static" data-bs-keyboard="false"
-            tabindex="-1" aria-labelledby="new-question-modal-label" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="new-question-modal-label">Ask Question</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="row mb-3">
-                                <div class="col-7">
-                                    <label for="question-title" class="form-label">Question title</label>
-                                    <input type="text" class="form-control" name="title" id="question-title">
-                                </div>
-                                <div class="col-5">
-                                    <label for="question-tags" class="form-label">Tags</label>
-                                    <input type="text" class="form-control" name="tags" id="question-tags">
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="question-body" class="form-label">Explain your question</label>
-                                <div class="card">
-                                    <div class="card-header">
-                                        <ul class="nav nav-tabs card-header-tabs">
-                                            <li class="nav-item">
-                                                <a class="nav-link active" data-bs-toggle="tab"
-                                                    data-bs-target="#write" type="button" role="tab"
-                                                    href="#">Write</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#" data-bs-toggle="tab"
-                                                    data-bs-target="#preview" type="button"
-                                                    role="tab">Preview</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="tab-content" id="myTabContent">
-                                            <div class="tab-pane fade show active" id="write" role="tabpanel"
-                                                aria-labelledby="write-tab" tabindex="0">
-                                                <textarea rows="7" class="form-control" name="body">hit there</textarea>
-                                            </div>
-                                            <div class="tab-pane fade show" id="preview" role="tabpanel"
-                                                aria-labelledby="preivew-tab" tabindex="0">
-                                                <div class="preview-body">
-                                                    hi there
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary"
-                            data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Post</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-  </Applayout>
-  <!-- <h1>Welcome!</h1>
+
+        <Modal id="question-modal" title="Ask Question" size="large" scrollable>
+            <QuestionForm />
+        </Modal>
+    </Applayout>
+    <!-- <h1>Welcome!</h1>
   <div v-for="question in questions" :key="question.id">
     <Link :href="`/questions/${question.id}`">
     {{ question.title }}
   </Link>
     </div> -->
+
     <Head title="All Questions" />
 </template>
 
 <script setup>
+import { onMounted, reactive } from 'vue';
+import * as bootstrap from 'bootstrap';
 import { Link, Head } from "@inertiajs/vue3";
 import Applayout from "../../Layouts/Applayout.vue";
 import QuestionSummary from "../../Components/Question/QuestionSummary.vue";
 import Pagination from "../../Components/Pagination.vue";
+import Modal from "../../Components/Modal.vue";
+import QuestionForm from "../../Components/Question/QuestionForm.vue";
+
 
 
 defineProps({
-  questions: {
-    type: Object,
-    required: true
-  }
+    questions: {
+        type: Object,
+        required: true
+    }
 })
+
+
+const state = reactive({
+    modalRef: null,
+
+})
+
+onMounted(() => {
+    state.modalRef = new bootstrap.Modal('#question-modal', {
+        backdrop: 'static',
+        keyboard: false
+    })
+})
+
+const showModal = () => state.modalRef.show();
+
+const hidemodal = () => state.modalRef.hide();
 </script>

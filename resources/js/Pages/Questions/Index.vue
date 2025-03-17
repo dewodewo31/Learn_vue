@@ -8,8 +8,8 @@
                     </div>
                     <div class="card mt-3">
                         <ul class="list-group list-group-flush">
-                            <QuestionSummary v-for="question in questions.data" :key="question.id"
-                                :question="question" />
+                            <QuestionSummary v-for="question in questions.data" :key="question.id" :question="question"
+                                @edit="editQuestion" />
                         </ul>
                     </div>
 
@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="d-grid">
-                        <button class="btn btn-primary" data-bs-toggle="modal" @click="showModal">Ask
+                        <button class="btn btn-primary" data-bs-toggle="modal" @click="askQuestion">Ask
                             Question</button>
                     </div>
 
@@ -51,8 +51,8 @@
             </div>
         </div>
 
-        <Modal id="question-modal" title="Ask Question" size="large" scrollable>
-            <QuestionForm />
+        <Modal id="question-modal" :title="state.modalTitle" size="large" scrollable>
+            <QuestionForm @success="hideModal" />
         </Modal>
     </Applayout>
     <!-- <h1>Welcome!</h1>
@@ -87,7 +87,7 @@ defineProps({
 
 const state = reactive({
     modalRef: null,
-
+    modalTitle: "Ask Questions"
 })
 
 onMounted(() => {
@@ -100,4 +100,15 @@ onMounted(() => {
 const showModal = () => state.modalRef.show();
 
 const hidemodal = () => state.modalRef.hide();
+
+const editQuestion = (question) => {
+    state.modalTitle = "Edit Question"
+    showModal()
+
+}
+
+const askQuestion = () => {
+    state.modalTitle = "Ask Question"
+    showModal()
+}
 </script>

@@ -9,7 +9,7 @@
                     <div class="card mt-3">
                         <ul class="list-group list-group-flush">
                             <QuestionSummary v-for="question in questions.data" :key="question.id" :question="question"
-                                @edit="editQuestion" />
+                                @edit="editQuestion" @remove="removeQuestion" />
                         </ul>
                     </div>
 
@@ -21,20 +21,7 @@
                             Question</button>
                     </div>
 
-                    <ul class="nav nav-underline flex-column mt-4">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Latest</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Unanswered</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Scored</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Mine</a>
-                        </li>
-                    </ul>
+                    <QuestionFilter :filter="filter" />
                     <h2 class="fs-5 mt-5">Related Tags</h2>
                     <ul class="tags-list mt-3">
                         <li><a href="#" class="tag mb-2">Javascript</a></li>
@@ -51,8 +38,10 @@
             </div>
         </div>
 
-        <Modal id="question-modal" :title="state.modalTitle" size="large" scrollable>
-            <QuestionForm @success="hideModal" />
+        <Modal id="question-modal" :title="state.modalTitle" size="large" scrollable @hidden="editing = false">
+
+            <component :is="editing ? EditQuestionForm : CreateQuestionForm" :question="question"
+                @success="hideModal" />
         </Modal>
     </Applayout>
     <!-- <h1>Welcome!</h1>
@@ -66,14 +55,16 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import * as bootstrap from 'bootstrap';
-import { Link, Head } from "@inertiajs/vue3";
+import { Link, Head, router } from "@inertiajs/vue3";
 import Applayout from "../../Layouts/Applayout.vue";
 import QuestionSummary from "../../Components/Question/QuestionSummary.vue";
 import Pagination from "../../Components/Pagination.vue";
 import Modal from "../../Components/Modal.vue";
-import QuestionForm from "../../Components/Question/QuestionForm.vue";
+import CreateQuestionForm from '../../Components/Question/CreateQuestionForm.vue';
+import EditQuestionForm from '../../Components/Question/EditQuestionForm.vue';
+import QuestionFilter from '../../Components/Question/QuestionFilter.vue';
 
 
 
@@ -81,7 +72,8 @@ defineProps({
     questions: {
         type: Object,
         required: true
-    }
+    },
+    filter: String
 })
 
 
@@ -89,6 +81,14 @@ const state = reactive({
     modalRef: null,
     modalTitle: "Ask Questions"
 })
+
+const question = reactive({
+    id: null,
+    title: null,
+    body: null
+})
+
+const editing = ref(false)
 
 onMounted(() => {
     state.modalRef = new bootstrap.Modal('#question-modal', {
@@ -101,14 +101,28 @@ const showModal = () => state.modalRef.show();
 
 const hidemodal = () => state.modalRef.hide();
 
-const editQuestion = (question) => {
+const editQuestion = (payload) => {
+    editing.value = true
     state.modalTitle = "Edit Question"
+
+    question.id = payload.id
+    question.title = payload.title
+    question.body = payload.body
     showModal()
 
 }
 
 const askQuestion = () => {
+    editing.value = false
     state.modalTitle = "Ask Question"
     showModal()
+}
+
+const removeQuestion = (payload) => {
+    if (confirm("Are You Sure?")) {
+        router.delete(route('questions.destroy', payload.id), {
+            preserveScroll: true
+        })
+    }
 }
 </script>

@@ -58,7 +58,7 @@
 import { onMounted, reactive, ref } from 'vue';
 import * as bootstrap from 'bootstrap';
 import { Link, Head, router } from "@inertiajs/vue3";
-import Applayout from "../../Layouts/Applayout.vue";
+import Applayout from "../../Layouts/AppLayout.vue";
 import QuestionSummary from "../../Components/Question/QuestionSummary.vue";
 import Pagination from "../../Components/Pagination.vue";
 import Modal from "../../Components/Modal.vue";

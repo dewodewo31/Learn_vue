@@ -58,9 +58,14 @@ class AnswerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAnswerRequest $request, Answer $answer)
+    public function update(UpdateAnswerRequest $request, Question $question, Answer $answer)
     {
-        //
+        if ($answer->question_id !== $question->id) {
+            abort(404, 'Answer does not belong to this question.');
+        }
+        $answer->update($request->validated());
+
+        return back()->with('success', 'Your answer updated successfully.');
     }
 
     /**

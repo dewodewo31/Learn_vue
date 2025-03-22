@@ -60,7 +60,7 @@ import { Head, router } from "@inertiajs/vue3";
 import Applayout from "../../Layouts/AppLayout.vue";
 import QuestionSummary from "../../Components/Question/QuestionSummary.vue";
 import Pagination from "../../Components/Pagination.vue";
-import UseModal from '../../Composables/UseModal';
+import UseModal from '../../Composable/UseModal';
 import CreateQuestionForm from '../../Components/Question/CreateQuestionForm.vue';
 import EditQuestionForm from '../../Components/Question/EditQuestionForm.vue';
 import QuestionFilter from '../../Components/Question/QuestionFilter.vue';

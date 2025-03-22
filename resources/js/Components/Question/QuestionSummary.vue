@@ -18,7 +18,7 @@ const emit = defineEmits(['edit', 'remove'])
             <div class="question-summary-stats">
                 <div class="stats-item vote"><strong>{{ question.votes_count }}</strong> vote</div>
                 <div class="stats-item status has-answers has-accepted-answer">
-                    <strong>{{ question.anwers_count }}</strong> answer
+                    <strong>{{ question.answers_count }}</strong> answer
                 </div>
                 <div class="stats-item view">{{ question.views_count }} views</div>
             </div>

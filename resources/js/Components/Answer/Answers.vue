@@ -2,7 +2,7 @@
 import Answer from './Answer.vue';
 import Pagination from '../../Components/Pagination.vue'
 import UpdateAnswer from './UpdateAnswer.vue'
-import useModal from '../../Composables/UseModal'
+import useModal from '../../Composable/UseModal'
 import { reactive } from 'vue';
 
 

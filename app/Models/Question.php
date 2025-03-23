@@ -57,4 +57,9 @@ class Question extends Model
         }
         return $this->bookmarks()->where('user_id', $user->id)->exists();
     }
+
+    public function votes()
+    {
+        return $this->morphToMany(User::class, 'votable');
+    }
 }

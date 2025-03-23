@@ -22,6 +22,7 @@ class QuestionResource extends JsonResource
             'votes_count' => $this->votes_count,
             'answers_count' => $this->answers_count,
             'views_count' => $this->views_count,
+            'has_accepted_answer' => !!$this->best_answer_id,
             'summary' => str($this->body)->limit(250),
             'user' => UserResource::make($this->user),
             'created_at' => DateTimeResource::make($this->created_at),

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AcceptAnswerController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
@@ -12,4 +13,6 @@ Route::get('/questions/{question:slug}', [QuestionController::class, 'show'])->n
 
 Route::resource('/questions', QuestionController::class)->except(['index', 'show'])->middleware('auth');
 
-Route::resource('/questions.answers', AnswerController::class)->only(['store', 'update', 'destroy']);
+Route::resource('/questions.answers', AnswerController::class)->only(['store', 'update', 'destroy'])->middleware('auth');
+
+Route::post('/questions/answers/{answer}/accept', AcceptAnswerController::class)->name('questions.answers.accept')->middleware('auth');

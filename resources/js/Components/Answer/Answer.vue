@@ -66,7 +66,8 @@ const removeAnswer = () => {
       <div class="d-flex justify-content-end mb-2">
         <Author :user="answer.user" :post-at="answer.created_at" is-answer />
       </div>
-      <ActionButton @remove="removeAnswer" @edit="emit('edit', answer)" />
+      <ActionButton :allow-updated="answer.can_be.updated" :allow-deleted="answer.can_be.deleted" @remove="removeAnswer"
+        @edit="emit('edit', answer)" />
     </div>
   </div>
 </template>

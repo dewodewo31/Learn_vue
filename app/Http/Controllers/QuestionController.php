@@ -8,6 +8,7 @@ use App\Http\Resources\AnswerResource;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Http\Resources\QuestionResource;
+use Illuminate\Support\Facades\Gate;
 use Termwind\Components\Raw;
 
 class QuestionController extends Controller
@@ -32,7 +33,6 @@ class QuestionController extends Controller
                 })
                 ->latest()->paginate(15)->withQueryString()
         );
-
 
         return Inertia('Questions/Index', [
             'questions' => $questions,
@@ -86,6 +86,9 @@ class QuestionController extends Controller
      */
     public function update(UpdateQuestionRequest $request, Question $question)
     {
+        Gate::authorize('update', $question);
+
+
         $question->update($request->validated());
 
         return back()->with('success', 'Your Question Updated Successfully.');
@@ -96,6 +99,8 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
+        Gate::authorize('delete', $question);
+
         $question->delete();
 
 

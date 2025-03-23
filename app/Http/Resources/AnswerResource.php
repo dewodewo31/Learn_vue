@@ -26,6 +26,7 @@ class AnswerResource extends JsonResource
             'can_be' => [
                 'deleted' => $request->user() && $request->user()->can('delete', $this->resource),
                 'updated' => $request->user() && $request->user()->can('update', $this->resource),
+                'accepted' => $request->user() && $request->user()->can('accept', $this->resource),
             ]
         ];
     }

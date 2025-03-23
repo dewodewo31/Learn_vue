@@ -64,4 +64,9 @@ class User extends Authenticatable
 
         return "https://www.gravatar.com/avatar/" . $hash;
     }
+
+    public function bookmarks()
+    {
+        return $this->belongsToMany(Question::class, 'bookmarks')->withTimestamps();
+    }
 }

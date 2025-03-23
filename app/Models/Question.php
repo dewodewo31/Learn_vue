@@ -45,4 +45,16 @@ class Question extends Model
         $this->best_answer_id = $answer->id;
         $this->save();
     }
+    public function bookmarks()
+    {
+        return $this->belongsToMany(User::class, 'bookmarks')->withTimestamps();
+    }
+
+    public function bookmarkedBy(?User $user): bool
+    {
+        if (!$user) {
+            return false;
+        }
+        return $this->bookmarks()->where('user_id', $user->id)->exists();
+    }
 }

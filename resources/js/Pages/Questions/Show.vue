@@ -30,7 +30,7 @@ const bookmark = () => {
 }
 
 const vote = (question, vote) => {
-  router.post(route('question_vote', question.id), {
+  router.post(route('questions.vote', question.id), {
     vote
   }, {
     preserveScroll: true
@@ -73,11 +73,10 @@ const downVoteQuestion = () => vote(props.question, -1)
         <div class="col-md-9">
           <Votable class="question-content" @up-vote="upVoteQuestion" @down-vote="downVoteQuestion"
             :votes="question.votes_count">
+            <!-- Default slot content -->
             <div class="post-col actionable">
-              <div class="question-body" v-html="question.body">
-
-              </div>
-              <div class="d-flex justify-content-between align-items start py-3">
+              <div class="question-body" v-html="question.body"></div>
+              <div class="d-flex justify-content-between align-items-start py-3">
                 <ul class="tags-inline">
                   <li><a href="#" class="tag">PHP</a></li>
                   <li><a href="#" class="tag">Laravel</a></li>
@@ -85,7 +84,10 @@ const downVoteQuestion = () => vote(props.question, -1)
                 </ul>
                 <Author :post-at="question.created_at" :user="question.user" />
               </div>
+            </div>
 
+            <!-- Extra slot HARUS di luar default slot content -->
+            <template #extra>
               <button title="Bookmark the post" class="btn text-secondary" @click="bookmark"
                 :class="{ 'question-bookmarked': question.is_bookmarked }">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -94,9 +96,7 @@ const downVoteQuestion = () => vote(props.question, -1)
                     d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2" />
                 </svg>
               </button>
-
-
-            </div>
+            </template>
           </Votable>
 
 
@@ -151,3 +151,10 @@ const downVoteQuestion = () => vote(props.question, -1)
     </div>
   </AppLayouts>
 </template>
+
+<style scoped>
+.question-bookmarked {
+  color: #ff6b6b !important;
+  fill: currentColor;
+}
+</style>

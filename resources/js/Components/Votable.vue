@@ -29,7 +29,7 @@ const emit = defineEmits(['upVote', 'downVote'])
           </svg>
         </button>
 
-        <slot name="extra" />
+        <slot name="extra"></slot>
 
 
       </div>

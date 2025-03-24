@@ -17,6 +17,6 @@ class BookmarkQuestionController extends Controller
     {
         $question->bookmarks()->detach($request->user());
 
-        return back()->with('success', 'Your question has been remove from bookmark succesfully');
+        return back()->with('success', 'Your question has been remove from bookmark');
     }
 }

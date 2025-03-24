@@ -81,12 +81,12 @@ class User extends Authenticatable
 
         if ($voteQuestions->where('votable_id', $question->id)->exists()) {
             $voteQuestions->updateExistingPivot($question, ['vote' => $vote]);
-        }else{
+        } else {
             $voteQuestions->attach($question, ['vote' => $vote]);
         }
 
 
-        $question->load('votes')
+        $question->load('votes');
         $question->votes_count = $question->votes()->sum('vote');
         $question->save();
     }

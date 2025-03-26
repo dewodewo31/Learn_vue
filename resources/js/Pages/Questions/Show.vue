@@ -5,6 +5,7 @@ import Author from '../../Components/Author.vue';
 import AppLayouts from '../../Layouts/AppLayout.vue';
 import { Head, router } from "@inertiajs/vue3"
 import Votable from '../../Components/Votable.vue';
+import UseVote from '../../Composable/UseVote';
 
 const props = defineProps({
   question: {
@@ -29,17 +30,8 @@ const bookmark = () => {
   }
 }
 
-const vote = (question, vote) => {
-  router.post(route('questions.vote', question.id), {
-    vote
-  }, {
-    preserveScroll: true
-  })
-}
+const { upVote, downVote } = UseVote(props.question, 'questions.vote')
 
-const upVoteQuestion = () => vote(props.question, 1)
-
-const downVoteQuestion = () => vote(props.question, -1)
 </script>
 
 <template>
@@ -71,8 +63,7 @@ const downVoteQuestion = () => vote(props.question, -1)
       </div>
       <div class="row">
         <div class="col-md-9">
-          <Votable class="question-content" @up-vote="upVoteQuestion" @down-vote="downVoteQuestion"
-            :votes="question.votes_count">
+          <Votable class="question-content" @up-vote="upVote" @down-vote="downVote" :votes="question.votes_count">
             <!-- Default slot content -->
             <div class="post-col actionable">
               <div class="question-body" v-html="question.body"></div>

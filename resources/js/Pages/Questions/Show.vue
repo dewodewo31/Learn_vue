@@ -6,6 +6,7 @@ import AppLayouts from '../../Layouts/AppLayout.vue';
 import { Head, router } from "@inertiajs/vue3"
 import Votable from '../../Components/Votable.vue';
 import UseVote from '../../Composable/UseVote';
+import Tags from '../../Components/Tags/TagsInline.vue';
 
 const props = defineProps({
   question: {
@@ -68,11 +69,7 @@ const { upVote, downVote } = UseVote(props.question, 'questions.vote')
             <div class="post-col actionable">
               <div class="question-body" v-html="question.body"></div>
               <div class="d-flex justify-content-between align-items-start py-3">
-                <ul class="tags-inline">
-                  <li><a href="#" class="tag">PHP</a></li>
-                  <li><a href="#" class="tag">Laravel</a></li>
-                  <li><a href="#" class="tag">OOP</a></li>
-                </ul>
+                <Tags :tags="question.tags" />
                 <Author :post-at="question.created_at" :user="question.user" />
               </div>
             </div>

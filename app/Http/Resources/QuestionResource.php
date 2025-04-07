@@ -24,6 +24,7 @@ class QuestionResource extends JsonResource
             'views_count' => $this->views_count,
             'has_accepted_answer' => !!$this->best_answer_id,
             'is_bookmarked' => $this->bookmarkedBy($request->user()),
+            'tags' => $this->tags->pluck('name'),
             'summary' => str($this->body)->limit(250),
             'user' => UserResource::make($this->user),
             'created_at' => DateTimeResource::make($this->created_at),

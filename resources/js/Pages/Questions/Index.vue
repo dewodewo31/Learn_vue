@@ -4,7 +4,11 @@
             <div class="row">
                 <div class="col-md-9">
                     <div class="d-flex align-items-center justify-content-between">
-                        <h1 class="page-header">All Questions</h1>
+                        <h1 class="page-header" v-if="!tag.name">All Questions</h1>
+                        <h1 class="page-header" v-else>Questions Tagged [{{ tag.name }}]</h1>
+                    </div>
+                    <div class="py-2" v-if="tag.description">
+                        {{ tag.description }}
                     </div>
                     <div class="card mt-3">
                         <ul class="list-group list-group-flush">
@@ -72,7 +76,11 @@ defineProps({
         type: Object,
         required: true
     },
-    filter: String
+    tag: {
+        type: Object,
+        default: () => ({})
+    },
+    filter: String,
 })
 
 
